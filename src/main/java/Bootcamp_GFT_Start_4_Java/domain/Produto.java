@@ -1,10 +1,11 @@
 package Bootcamp_GFT_Start_4_Java.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,22 +24,30 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente implements Serializable{
+public class Produto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(nullable = false , unique = true)
 	private String nome;
-	@Column(nullable = false , unique = true)
-	private String email;
+	private String descricao;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "cliente_id")
+	@JoinColumn(name = "produto_id")
 	private Loja loja;
 	
-	@OneToMany(mappedBy = "id.cliente")
+	@OneToMany(mappedBy = "id.produto")
 	private Set<ItemPedido> itens = new HashSet<>();
+
+	@JsonIgnore
+	public List<Cliente> getClientes(){
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		for(ItemPedido p : itens) {
+			clientes.add(p.getCliente());
+		}
+		return clientes;
+	}
+
 }
