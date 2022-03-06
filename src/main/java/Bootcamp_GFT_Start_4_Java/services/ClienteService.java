@@ -1,8 +1,14 @@
 package Bootcamp_GFT_Start_4_Java.services;
 
-import org.springframework.stereotype.Service;
+import Bootcamp_GFT_Start_4_Java.domain.Cliente;
 
-@Service
-public class ClienteService {
+public interface ClienteService {
 
+	Cliente save(Cliente cliente);
+
+	Object findById(Integer id);
+
+	void delete(Cliente cliente);
+
+	Cliente update(Cliente cliente);
 }
